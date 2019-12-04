@@ -27,18 +27,18 @@ def paper_model(img_shape=(150, 150, 1), n_classes=1, l2_reg=0.,
 	paper.add(Activation('relu'))
 	paper.add(MaxPooling2D(pool_size=(4, 4)))
 
-	# Layer 6
+	# Layer 3
 	paper.add(Flatten())
 	paper.add(Dense(1000))
 	paper.add(Activation('relu'))
 	paper.add(Dropout(0.1))
 
-	# Layer 7
+	# Layer 4
 	paper.add(Dense(1000))
 	paper.add(Activation('relu'))
 	paper.add(Dropout(0.1))
 
-	# Layer 8
+	# Layer 5
 	paper.add(Dense(n_classes))
 	paper.add(Activation('sigmoid'))
 
@@ -62,6 +62,7 @@ training_set = train_datagen.flow_from_directory('C:/Users/Johvicente/Documents/
                                                  class_mode = 'binary',
                                                  color_mode = "grayscale")
 
+
 test_set = test_datagen.flow_from_directory('C:/Users/Johvicente/Documents/DocumentForgeryProject/test_set',
                                             target_size = (150, 150),
                                             batch_size = batch_size,
@@ -75,14 +76,14 @@ papernet.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['a
 
 papernet.fit_generator(training_set,
                          steps_per_epoch = 157/batch_size,
-                         epochs = 10,
+                         epochs = 2,
                          validation_data = test_set,
                          validation_steps = 21)
 
 papernet.save("docforgPAPER.h5")
 
 
-image_file = image.load_img('C:/Users/Johvicente/Documents/DocumentForgeryProject/single prediction/test_img.PNG', color_mode="grayscale", target_size = (150, 150))
+image_file = image.load_img('C:/Users/Johvicente/Documents/DocumentForgeryProject/single prediction/ghz_4.png', color_mode="grayscale", target_size = (150, 150))
 
 ''' from image to 3D array '''
 image_file = image.img_to_array(image_file)
@@ -100,4 +101,4 @@ training_set.class_indices
 if result[0][0] == 1:
     print('There is a Gehalt on the image') 
 else:
-    print('There is a dog on the image') 
+    print('There is a Handgeschrieben on the image') 
